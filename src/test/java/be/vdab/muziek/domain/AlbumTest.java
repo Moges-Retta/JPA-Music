@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNullPointerException;
+import static org.assertj.core.api.Assertions.*;
 
 public class AlbumTest {
     private Album album1;
@@ -57,5 +56,14 @@ public class AlbumTest {
         album2.add(track1);
         album2.add(track2);
         assertThat(album2.totalTime(album2.getTracks())).isEqualTo(LocalTime.of(1,0,0));
+    }
+    @Test
+    void updateScore(){
+        album1.updateScore(5);
+        assertThat(album1.getScore()).isEqualTo(5);
+    }
+    @Test
+    void updateScoreIllegal(){
+        assertThatIllegalArgumentException().isThrownBy(()->album1.updateScore(-1));
     }
 }

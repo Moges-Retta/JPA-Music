@@ -10,18 +10,16 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 import javax.persistence.EntityManager;
 
-import java.math.BigDecimal;
-
 import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @Sql({"/insertArtist.sql", "/insertAlbum.sql", "/insertTrack.sql"})
-@Import(JpaMuziekRepository.class)
-class JpaMuziekRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
+@Import(JpaAlbumRepository.class)
+class JpaAlbumRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
     private static final String ALBUMS = "albums";
-    private JpaMuziekRepository repository;
+    private JpaAlbumRepository repository;
     private EntityManager manager;
 
-    public JpaMuziekRepositoryTest(JpaMuziekRepository repository,EntityManager manager) {
+    public JpaAlbumRepositoryTest(JpaAlbumRepository repository, EntityManager manager) {
         this.repository = repository;
         this.manager = manager;
     }
@@ -34,6 +32,17 @@ class JpaMuziekRepositoryTest extends AbstractTransactionalJUnit4SpringContextTe
         assertThat(repository.findAll()).hasSize(super.countRowsInTable(ALBUMS))
                 .extracting(Album::getNaam).isSorted();
     }
+    @Test
+    void findById(){
+        assertThat(repository.findById(idVanTestAlbum()).get().getNaam()).isEqualTo("test");
+    }
+
+    @Test
+    @DisplayName("geen record voor id =  -1")
+    void findByIdOnbestandeId(){
+        assertThat(repository.findById(-1)).isNotPresent();
+    }
+
     @Test
     void scoreOpslag() {
         assertThat(repository.update(idVanTestAlbum(),5))

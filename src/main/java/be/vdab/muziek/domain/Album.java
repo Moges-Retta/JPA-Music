@@ -1,6 +1,7 @@
 package be.vdab.muziek.domain;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -67,5 +68,11 @@ public class Album {
         return tijden.stream().reduce((som,tijd1)->som.plusHours(tijd1.getHour())
                 .plusMinutes(tijd1.getMinute())
                 .plusSeconds(tijd1.getSecond())).get();
+    }
+    public void updateScore(int scoreValue){
+        if (scoreValue < 0) {
+            throw new IllegalArgumentException();
+        }
+        score = scoreValue;
     }
 }
