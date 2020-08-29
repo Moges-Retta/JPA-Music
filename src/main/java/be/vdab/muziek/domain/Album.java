@@ -1,8 +1,10 @@
 package be.vdab.muziek.domain;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 @Entity
@@ -58,5 +60,12 @@ public class Album {
             track.setAlbum(this);
         }
         return toegevoegd;
+    }
+    public LocalTime totalTime(Set<Track> tracks){
+        var tijden = new LinkedList<LocalTime>();
+        tracks.forEach(track -> tijden.add(track.getTijd()));
+        return tijden.stream().reduce((som,tijd1)->som.plusHours(tijd1.getHour())
+                .plusMinutes(tijd1.getMinute())
+                .plusSeconds(tijd1.getSecond())).get();
     }
 }

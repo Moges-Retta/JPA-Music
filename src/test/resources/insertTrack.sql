@@ -1,0 +1,1 @@
+insert into tracks (albumid,naam,tijd) values ((select id from albums where naam='test'),'test','0:0:0')
