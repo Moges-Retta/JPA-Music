@@ -17,7 +17,11 @@ public class JpaAlbumRepository implements AlbumRepository {
 
     @Override
     public List<Album> findAll() {
-        return manager.createNamedQuery("Album.findAll",Album.class).getResultList();
+        return
+                manager.createNamedQuery("Album.findAll",Album.class)
+                        .setHint("javax.persistence.loadgraph",
+                                manager.createEntityGraph(Album.MET_ARTIEST))
+                        .getResultList();
     }
 
     @Override

@@ -10,7 +10,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "albums")
+@NamedEntityGraph(name = Album.MET_ARTIEST,
+        attributeNodes = @NamedAttributeNode("artist") )
 public class Album {
+    public static final String MET_ARTIEST = "Album.metArtiest";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
