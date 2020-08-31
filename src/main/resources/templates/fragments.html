@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<div xmlns:th="http://www.thymeleaf.org">
+    <nav th:fragment="menu">
+        <ul>
+            <li><a th:href="@{/Albums}">Albums</a></li>
+        </ul>
+    </nav>
+    <head th:fragment="head(title)">
+        <title th:text="${title}"></title>
+        <link rel="stylesheet" th:href="@{/css/muziek.css}">
+    </head>
+</div>
+</body>
+</html>

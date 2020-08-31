@@ -19,21 +19,21 @@ public class AlbumTest {
         var artist = new Artist("test");
         album1 = new Album("test", 0, artist);
         album2 = new Album("test2", 0, artist);
-        track1 = new Track("test", LocalTime.of(0, 0, 0), album1);
-        track2 = new Track("test2", LocalTime.of(1, 0, 0), album1);
+        track1 = new Track("test", LocalTime.of(0, 0, 0));
+        track2 = new Track("test2", LocalTime.of(1, 0, 0));
+        album1.add(track1);
     }
 
     @Test
     @DisplayName("track1 is van album 1")
     void trackAlbum() {
-        assertThat(track1.getAlbum()).isEqualTo(album1);
+        //assertThat(track1.getAlbum()).isEqualTo(album1);
         assertThat(album1.getTracks()).containsOnly(track1);
     }
 
     @Test
     void track2NaarAlbum1() {
         assertThat(album2.add(track2)).isTrue();
-        assertThat(album1.getTracks()).isEmpty();
         assertThat(album2.getTracks()).containsOnly(track2);
     }
     @Test
@@ -47,7 +47,8 @@ public class AlbumTest {
     @Test
     @DisplayName("null track toovoegen mislukt")
     void nullTrack() {
-        assertThatNullPointerException().isThrownBy(() -> album1.add(null));
+        assertThat(album1.add(null)).isFalse();
+        //assertThatNullPointerException().isThrownBy(() -> album1.add(null));
     }
 
     @Test
@@ -55,7 +56,7 @@ public class AlbumTest {
     void totaalTijd(){
         album2.add(track1);
         album2.add(track2);
-        assertThat(album2.totalTime(album2.getTracks())).isEqualTo(LocalTime.of(1,0,0));
+        assertThat(album2.totalTime()).isEqualTo(LocalTime.of(1,0,0));
     }
     @Test
     void updateScore(){

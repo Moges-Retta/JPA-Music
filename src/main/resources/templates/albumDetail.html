@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="nl " xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='Albums')"></head>
+<body>
+    <div th:if="${album}" th:object="${album}">
+        <h1 th:text="*{naam}"></h1>
+        <h1 th:text="${album.artist.naam}"></h1>
+    </div>
+<form th:object="${album}"
+      method="post" th:action="@{/albums/{albumId}(albumId=*{id})}">
+    <table>
+        <thead>
+        <th>Album</th>
+        <th>Tijd</th>
+        </thead>
+        <tbody>
+        <tr th:each="track:${tracks}" th:object="${track}">
+            <td th:text="*{naam}"></td>
+            <td th:text="*{tijd}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr></tr>
+        <th>Totaal tijd</th>
+        <th th:text="${totaalTijd}"></th>
+        </tfoot>
+    </table>
+    <input name="score"
+           autofocus required type="number">
+            Geef uw Score
+    </input>
+    <button>Opslag score</button>
+</form>
+
+
+</body>
+</html>

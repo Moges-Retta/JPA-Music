@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="nl " xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='Muziek')"></head>
+<body>
+<h2>Albums</h2>
+<ul>
+    <li th:each="album:${albums}" th:object="${album}">
+        <a th:href="@{/albums/{id}(id=*{id})}" th:text="*{naam}"></a>
+</li>
+</ul>
+</body>
+</html>

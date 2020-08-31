@@ -19,7 +19,9 @@ public class Album {
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "artiestid")
     private Artist artist;
-    @OneToMany(mappedBy = "album")
+    @ElementCollection
+    @CollectionTable(name = "tracks",
+            joinColumns = @JoinColumn(name = "albumid"))
     private Set<Track> tracks;
     public Album(String naam, int score, Artist artist) {
         this.naam = naam;
@@ -51,7 +53,7 @@ public class Album {
     public Artist getArtist() {
         return artist;
     }
-    public boolean add(Track track) {
+    /*public boolean add(Track track) {
         var toegevoegd = tracks.add(track);
         var oudeAlbum = track.getAlbum();
         if (oudeAlbum != null && oudeAlbum != this) {
@@ -61,8 +63,15 @@ public class Album {
             track.setAlbum(this);
         }
         return toegevoegd;
+    }*/
+    public boolean add(Track track) {
+        var toegevoegd = false;
+        if (track != null) {
+            toegevoegd = tracks.add(track);
+        }
+        return toegevoegd;
     }
-    public LocalTime totalTime(Set<Track> tracks){
+    public LocalTime totalTime(){
         var tijden = new LinkedList<LocalTime>();
         tracks.forEach(track -> tijden.add(track.getTijd()));
         return tijden.stream().reduce((som,tijd1)->som.plusHours(tijd1.getHour())

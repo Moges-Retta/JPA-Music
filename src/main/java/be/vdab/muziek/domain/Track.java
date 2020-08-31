@@ -5,21 +5,19 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tracks")
+@Embeddable
+@Access(AccessType.FIELD)
 public class Track {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int albumid;*/
+
     private String naam;
     private LocalTime tijd;
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "albumid")
-    private Album album;
 
-    public Track(String naam,LocalTime tijd,Album album) {
+    public Track(String naam,LocalTime tijd) {
         this.naam = naam;
         this.tijd = tijd;
-        setAlbum(album);
     }
     protected Track(){}
 
@@ -31,7 +29,7 @@ public class Track {
         return naam;
     }
 
-    public void setAlbum(Album album) {
+    /*public void setAlbum(Album album) {
         if (!album.getTracks().contains(this)) {
             album.add(this);
         }
@@ -40,7 +38,11 @@ public class Track {
 
     public Album getAlbum() {
         return album;
-    }
+    }*/
+
+    /*public int getAlbumid() {
+        return albumid;
+    }*/
 
     @Override
     public boolean equals(Object o) {
